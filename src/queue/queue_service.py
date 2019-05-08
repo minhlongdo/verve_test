@@ -25,6 +25,7 @@ class QueueService(object):
                                      self.on_connection_open,
                                      stop_ioloop_on_close=False)
 
+    # variable unused_connection is unused
     def on_connection_open(self, unused_connection):
         LOGGER.debug('Connection opened')
         self.add_on_connection_close_callback()
@@ -34,6 +35,7 @@ class QueueService(object):
         LOGGER.debug('Adding connection close callback')
         self._connection.add_on_close_callback(self.on_connection_closed)
 
+    # variable connection is unused
     def on_connection_closed(self, connection, reply_code, reply_text):
         self._channel = None
         if self._closing:
@@ -80,6 +82,7 @@ class QueueService(object):
                                        False,
                                        True)
 
+    # variable unused_frame is unused
     def on_exchange_declareok(self, unused_frame):
         LOGGER.debug('Exchange declared')
         self.setup_queue(self.QUEUE)
@@ -88,12 +91,14 @@ class QueueService(object):
         LOGGER.debug('Declaring queue %s', queue_name)
         self._channel.queue_declare(self.on_queue_declareok, queue_name, False, True)
 
+    # variable method_frame is unused
     def on_queue_declareok(self, method_frame):
         LOGGER.debug('Binding %s to %s with %s',
                     self.EXCHANGE, self.QUEUE, self.QUEUE)
         self._channel.queue_bind(self.on_bindok, self.QUEUE,
                                  self.EXCHANGE, self.QUEUE)
 
+    # variable unused_frame is unused
     def on_bindok(self, unused_frame):
         LOGGER.debug('Queue bound')
         self.start_consuming()
@@ -123,6 +128,7 @@ class QueueService(object):
             LOGGER.debug('Sending a Basic.Cancel RPC command to RabbitMQ')
             self._channel.basic_cancel(self.on_cancelok, self._consumer_tag)
 
+    # variable unused_frame is unused
     def on_cancelok(self, unused_frame):
         LOGGER.debug('RabbitMQ acknowledged the cancellation of the consumer')
         self.close_channel()
@@ -150,7 +156,8 @@ class QueueService(object):
     def set_message_handler(self, callback):
         self._callback = callback
 
-    def on_message(self, channel, basic_deliver, properties, body):
+    # variable channel is unused
+    def on_message(self, basic_deliver, properties, body):
         LOGGER.debug('Received message # %s from %s: %s',
                     basic_deliver.delivery_tag, properties.app_id, body)
 

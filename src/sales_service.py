@@ -22,6 +22,7 @@ def generate_sale():
 
 class SalesService(QueueService):
 
+    # variable unused_frame is unused
     def on_bindok(self, unused_frame):
         """This method is invoked by pika when it receives the Queue.BindOk
         response from RabbitMQ. Since we know we're now setup and bound, it's

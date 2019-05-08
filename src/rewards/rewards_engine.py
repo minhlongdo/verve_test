@@ -16,8 +16,9 @@ class RewardsEngine(object):
     ]
     }
 
-    def __init__(self, queueService):
-        self._queueService = queueService
+    # to be consistent "queueService" should be "queue_service"
+    def __init__(self, queue_service):
+        self._queue_service = queue_service
 
     def points_from_purchase(self, price):
         return price * 10
